@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" /><title>Live videos hub</title><meta charset="UTF-8" /><meta name="propeller" content="c13d5743ea67f853c9ff055cb0c7b1ff" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.2" /><link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.png"><?php wp_head(); ?><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-71758218-1', 'auto');
+  ga('send', 'pageview');
+</script><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Kallemdesign -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5286496174131601"
+     data-ad-slot="3662919552"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></head><body>
+<div class="site_container"><div class="header_top_bar_container clearfix"><div class="header_top_bar"><form role="search" method="get" id="searchform" class="search" action="<?php echo esc_url( home_url( '/' ) ); ?>"><input type="text"  value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder='Search ...' class="search_input hint"><input type="submit" class="search_submit" value=""><input type="hidden" name="page" value="search"></form><ul class="social_icons  dark"><li><a target="_blank" href="https://www.facebook.com/livevideoshub" class="social_icon facebook" title="facebook">&nbsp;</a></li><li><a target="_blank" href="https://twitter.com/livevideoshub" class="social_icon twitter" title="twitter">&nbsp;</a></li><li><a href="https://youtube.com/kallemdesign" class="social_icon youtube" title="youtube"></a></li><li><a href="https://instagram.com/livevideoshub" class="social_icon instagram" title="instagram"></a></li></ul><div class="latest_news_scrolling_list_container"><ul><li class="category"><a href='<?php echo home_url(); ?>'>Home</a></li><li class="category"><a href='<?php echo home_url(); ?>/about'>About Us</a></li><li class="category"><a href='<?php echo home_url(); ?>/contact-us'>Contact Us</a></li><li class="category"><a href='<?php echo home_url(); ?>/advertise'>Advertise</a></li></ul></div></div></div><div class="header_container small"><div class="header clearfix"><div class="logo"><h1><a href="<?php echo home_url(); ?>" title="<?php echo get_the_title(); ?>">LiveVideosHub</a></h1><h4>Watch and Enjoy videos</h4></div><div class="header_add"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1518250080154239" data-ad-slot="1252304333" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div><div class="menu_container clearfix sticky"><nav><?php wp_nav_menu(array('theme_location'=>'header-menu','menu_class'=>'sf-menu')); ?></nav><div class="mobile_menu_container"><a href="#" class="mobile-menu-switch"><span class="line"></span><span class="line"></span><span class="line"></span></a><div class="mobile-menu-divider"></div><nav><?php wp_nav_menu(array('theme_location'=>'header-menu','menu_class'=>'mobile-menu')); ?></nav></div></div>

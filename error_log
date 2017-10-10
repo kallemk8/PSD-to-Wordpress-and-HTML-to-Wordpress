@@ -1,0 +1,13 @@
+[10-Mar-2016 17:41:58 UTC] PHP Fatal error:  Call to undefined function wp_mail() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/form.php on line 17
+[10-Mar-2016 17:41:58 UTC] PHP Fatal error:  Call to undefined function wp_mail() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/form.php on line 17
+[10-Mar-2016 17:43:28 UTC] PHP Fatal error:  Call to undefined function wp_mail() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/form.php on line 17
+[10-Mar-2016 17:43:28 UTC] PHP Fatal error:  Call to undefined function wp_mail() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/form.php on line 17
+[10-Mar-2016 17:45:06 UTC] PHP Fatal error:  Call to undefined function wp_mail() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/form.php on line 17
+[10-Mar-2016 17:45:06 UTC] PHP Fatal error:  Call to undefined function wp_mail() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/form.php on line 17
+[26-Mar-2016 12:36:18 UTC] PHP Fatal error:  Call to undefined function get_header() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/index.php on line 1
+[28-Mar-2016 20:40:25 UTC] PHP Fatal error:  Call to undefined function get_header() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/index.php on line 1
+[29-Nov-2016 11:01:46 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/index.php on line 1
+[16-Mar-2017 12:48:43 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/404.php on line 1
+[23-Mar-2017 09:27:11 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/404.php on line 1
+[01-Apr-2017 09:24:34 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/404.php on line 1
+[24-Apr-2017 00:38:19 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home/srikanth0598/public_html/wp-content/themes/livevideoshub_new/404.php on line 1
