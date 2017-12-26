@@ -17,6 +17,7 @@
 	height: 170px;
 	
 }
+.youtubeimage{margin:-30px 0px; min-height: 240px;}
 .min-height-1{
 	max-height: 1px;
 	overflow: hidden;
@@ -49,55 +50,17 @@
 						$count=1;
 							while ( have_posts() ) : the_post();
 						?>
-						<?php if($count==1): ?>
-						<li class="">
-							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-							<!-- Homepage -->
-							<ins class="adsbygoogle"
-							     style="display:block"
-							     data-ad-client="ca-pub-1518250080154239"
-							     data-ad-slot="4081346335"
-							     data-ad-format="auto"></ins>
-							<script>
-							(adsbygoogle = window.adsbygoogle || []).push({});
-							</script>
-						</li>
-
-						<?php endif; ?>
-						<?php if($count==2): ?>
-						<li class="only-mobile">
-							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-							<!-- Main sidebar large -->
-							<ins class="adsbygoogle"
-							     style="display:inline-block;width:300px;height:600px"
-							     data-ad-client="ca-pub-1518250080154239"
-							     data-ad-slot="5431288735"></ins>
-							<script>
-							(adsbygoogle = window.adsbygoogle || []).push({});
-							</script>
-						</li>
-
-						<?php endif; ?>
-						<?php if($count==3||$count==4): ?>
-						<li class="only-mobile">
-							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-							<!-- Sidebar -->
-							<ins class="adsbygoogle"
-							     style="display:inline-block;width:336px;height:280px"
-							     data-ad-client="ca-pub-1518250080154239"
-							     data-ad-slot="7259666331"></ins>
-							<script>
-							(adsbygoogle = window.adsbygoogle || []).push({});
-							</script>
-						</li>
-
-						<?php endif; ?>
+						
 						<li>
 							<a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>">
 								<?php  $feat_image = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID),'medium' );?>
-								<?php if( $feat_image): ?>
-								<img src='<?php echo $feat_image[0]; ?>' title='<?php echo get_the_title(); ?>' alt='<?php echo get_the_title(); ?>'>
-								<?php endif; ?>
+									<?php if(get_field('youtube_video_id')): ?>
+										<img class="youtubeimage"  src="https://img.youtube.com/vi/<?php echo get_field('youtube_video_id'); ?>/sddefault.jpg" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>" />
+										<?php else: ?>
+										<?php if( $feat_image): ?>
+											<img src='<?php echo $feat_image[0]; ?>' title='<?php echo get_the_title(); ?>' alt='<?php echo get_the_title(); ?>'>
+										<?php endif;endif;  ?>
+								
 								<span class="post-image-play-button" ></span>
 								<?php if(get_field('video_length')): ?>
 								<span class="timier" ><?php echo get_field('video_length'); ?></span>
@@ -122,18 +85,7 @@
 							
 							endif;
 						?>
-
-						
 					</ul>
-					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- Sidebar -->
-					<ins class="adsbygoogle"
-					     style="display:inline-block;width:336px;height:280px"
-					     data-ad-client="ca-pub-1518250080154239"
-					     data-ad-slot="7259666331"></ins>
-					<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>
 				</div>
 				<ul class="pagination clearfix page_margin_top_section">
 					<?php twentyfourteen_paging_nav(); ?>

@@ -32,62 +32,69 @@
 		'after_title'   => '</h4>',
 	) );
  
-	/*$labels = array(
-	'name'               => _x( 'Photos', 'post type general name' ),
-	'singular_name'      => _x( 'Photo', 'post type singular name' ),
-	'add_new'            => _x( 'Add New', 'Photo' ),
-	'add_new_item'       => __( 'Add New Photo' ),
-	'edit_item'          => __( 'Edit Photo' ),
-	'new_item'           => __( 'New Photo' ),
-	'all_items'          => __( 'All Photos' ),
-	'view_item'          => __( 'View Photos' ),
-	'search_items'       => __( 'Search Photos' ),
-	'not_found'          => __( 'No photos found' ),
-	'not_found_in_trash' => __( 'No photos found in the Trash' ), 
-	'parent_item_colon'  => '',
-	'menu_name'          => 'Photos'
-	);
-	$args = array(
-		'labels'        => $labels,
-		'description'   => '',
-		'public'        => true,
-		'menu_position' => 5,
-		'supports'      => array( 'title','thumbnail','editor'),
-		'has_archive'   => false,
-		'query_var' => true,
-		'taxonomies' => array('photos_category'),
-	);
+add_action( 'rest_api_init', 'ws_register_images_field' );
 
-	register_post_type( 'Photos',$args );	
-	add_action('init', 'add_category_offers');
-	function add_category_offers() {
-		$labels = array(
-			'name'              => _x( 'Photos Categories', 'taxonomy general name' ),
-			'singular_name'     => _x( 'Category', 'taxonomy singular name' ),
-			'search_items'      => __( 'Search Categories' ),
-			'all_items'         => __( 'All Categories' ),
-			'parent_item'       => __( 'Parent Category' ),
-			'parent_item_colon' => __( 'Parent Category:' ),
-			'edit_item'         => __( 'Edit Category' ),
-			'update_item'       => __( 'Update Category' ),
-			'add_new_item'      => __( 'Add New Category' ),
-			'new_item_name'     => __( 'New Category Name' ),
-			'menu_name'         => __( 'Categories' ),
-		);
+function ws_get_images_urls( $object, $field_name, $request ) {
+    $medium = wp_get_attachment_image_src( get_post_thumbnail_id( $object->id ), 'medium' );
+    $medium_url = $medium['0'];
 
-		$args = array(
-			'hierarchical'      => true,
-			'labels'            => $labels,
-			'show_ui'           => true,
-			'show_admin_column' => true,
-			'query_var'         => true,
-			'rewrite'           => array( 'slug' => 'photos_category' ),
-		);
+    $large = wp_get_attachment_image_src( get_post_thumbnail_id( $object->id ), 'large' );
+    $large_url = $large['0'];
 
-	    register_taxonomy('photos_category', 'photos',$args);
-	    //register_taxonomy_for_object_type('post_tag', 'portfolio');
-	  
- 	}*/
+    return array(
+        'medium' => $medium_url,
+        'large'  => $large_url,
+    );
+}
+
+add_action( 'rest_api_init', 'wp_rest_insert_tag_links' );
+
+function wp_rest_insert_tag_links(){
+
+    register_rest_field( 'post',
+        'post_categories',
+        array(
+            'get_callback'    => 'wp_rest_get_categories_links',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+    register_rest_field( 'post',
+        'post_tags',
+        array(
+            'get_callback'    => 'wp_rest_get_tags_links',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+}
+
+function wp_rest_get_categories_links($post){
+    $post_categories = array();
+    $categories = wp_get_post_terms( $post['id'], 'category', array('fields'=>'all') );
+
+foreach ($categories as $term) {
+    $term_link = get_term_link($term);
+    if ( is_wp_error( $term_link ) ) {
+        continue;
+    }
+    $post_categories[] = array('term_id'=>$term->term_id, 'name'=>$term->name, 'link'=>$term_link);
+}
+    return $post_categories;
+
+}
+function wp_rest_get_tags_links($post){
+    $post_tags = array();
+    $tags = wp_get_post_terms( $post['id'], 'post_tag', array('fields'=>'all') );
+    foreach ($tags as $term) {
+        $term_link = get_term_link($term);
+        if ( is_wp_error( $term_link ) ) {
+            continue;
+        }
+        $post_tags[] = array('term_id'=>$term->term_id, 'name'=>$term->name, 'link'=>$term_link);
+    }
+    return $post_tags;
+}	
 /**
  * Custom template tags for Twenty Fourteen
  *
@@ -169,7 +176,7 @@ endif;
 				
 			wp_enqueue_style( 'responsive',get_template_directory_uri().'/style/responsive.css', array(), '2.0');	 	
 			wp_enqueue_style( 'odometer',get_template_directory_uri().'/style/odometer-theme-default.css', array(), '2.0');	 	
-			wp_enqueue_style( 'video-js','http://vjs.zencdn.net/5.10.7/video-js.css', array(), '2.0');	 	
+			 	
 			
 		}
 	}
@@ -197,7 +204,7 @@ endif;
 		 wp_enqueue_script( 'google map', '//maps.google.com/maps/api/js?sensor=false',array(),'1.3.2' ,true); 
 		 wp_enqueue_script( 'main', get_template_directory_uri().'/js/main.js',array(),'1.3.2' ,true); 
 		 wp_enqueue_script( 'odometer', get_template_directory_uri().'/js/odometer.min.js',array(),'1.3.2' ,true); 
-		 wp_enqueue_script( 'vieo-js', 'http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js',array(),'1.3.2' ,true); 
+		 
 	  }
 	}
 
@@ -217,7 +224,7 @@ class wpb_widget extends WP_Widget {
 		) ) ); 
 		echo $args['before_widget']; ?>
 		<?php if ( $title ) {
-			echo "<h4 class='box_header'>".$title." <a class='more homepagemore page_margin_top' href=".home_url()."/category/trailers/>MORE</a></h4>"; } echo "<ul class='blog small clearfix'>"; while ( $r->have_posts() ) : $r->the_post(); ?><li class="post"><a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>"><span class="icon small video"></span><?php the_post_thumbnail(array( 100, 100) ); ?></a><div class="post_content"><h5><a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a></h5><ul class="post_details simple"><li class="category"><?php $posttags = get_the_tags();?><?php if ($posttags) { $tagcount=1; foreach($posttags as $tag) { if($tagcount==1){ ?> <a href="<?php echo get_tag_link($tag->term_id); ?>" title='<?php echo get_the_title(); ?>'><?php echo $tag->name; ?></a><?php } $tagcount++; } } ?> </li></ul></div></li><?php endwhile; echo '</ul>';
+			echo "<h4 class='box_header'>".$title." <a class='more homepagemore page_margin_top' href=".home_url()."/category/trailers/>MORE</a></h4>"; } echo "<ul class='blog small clearfix'>"; while ( $r->have_posts() ) : $r->the_post(); ?><li class="post"><a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>"><span class="icon small video"></span><img src="https://img.youtube.com/vi/<?php echo get_field('youtube_video_id'); ?>/default.jpg" width="100px" height="56px" /></a><div class="post_content"><h5><a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a></h5><ul class="post_details simple"><li class="category"><?php $posttags = get_the_tags();?><?php if ($posttags) { $tagcount=1; foreach($posttags as $tag) { if($tagcount==1){ ?> <a href="<?php echo get_tag_link($tag->term_id); ?>" title='<?php echo get_the_title(); ?>'><?php echo $tag->name; ?></a><?php } $tagcount++; } } ?> </li></ul></div></li><?php endwhile; echo '</ul>';
 		}
 
 	public function form( $instance ) {
@@ -261,7 +268,7 @@ class wp_videosongs extends WP_Widget {
 			'ignore_sticky_posts' => true
 		) ) );
 		echo $args['before_widget']; ?>
-		<?php if ( $title ) { echo "<h4 class='box_header page_margin_top_section'>".$title." <a class='more homepagemore page_margin_top' href=".home_url().'/category/'.$cat_name.">MORE </a></h4>"; } echo "<ul class='blog small clearfix'>"; while ( $r->have_posts() ) : $r->the_post(); ?><li class="post"><a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>"><span class="icon small video"></span><?php the_post_thumbnail(array( 100, 100) ); ?></a><div class="post_content"><h5><a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a></h5><ul class="post_details simple"><li class="category"><?php $posttags = get_the_tags();?><?php if ($posttags) { $tagcount2=1; foreach($posttags as $tag) { if($tagcount2==1){ ?><a href="<?php echo get_tag_link($tag->term_id); ?>" title='<?php echo get_the_title(); ?>'><?php echo $tag->name; ?></a><?php }$tagcount2++; } } ?></li></ul></div></li><?php endwhile;  echo '</ul>'; }
+		<?php if ( $title ) { echo "<h4 class='box_header page_margin_top_section'>".$title." <a class='more homepagemore page_margin_top' href=".home_url().'/category/'.$cat_name.">MORE </a></h4>"; } echo "<ul class='blog small clearfix'>"; while ( $r->have_posts() ) : $r->the_post(); ?><li class="post"><a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>"><span class="icon small video"></span><img src="https://img.youtube.com/vi/<?php echo get_field('youtube_video_id'); ?>/default.jpg" width="100px" height="56px" /></a><div class="post_content"><h5><a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a></h5><ul class="post_details simple"><li class="category"><?php $posttags = get_the_tags();?><?php if ($posttags) { $tagcount2=1; foreach($posttags as $tag) { if($tagcount2==1){ ?><a href="<?php echo get_tag_link($tag->term_id); ?>" title='<?php echo get_the_title(); ?>'><?php echo $tag->name; ?></a><?php }$tagcount2++; } } ?></li></ul></div></li><?php endwhile;  echo '</ul>'; }
 
 	public function form( $instance ) {
 		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
